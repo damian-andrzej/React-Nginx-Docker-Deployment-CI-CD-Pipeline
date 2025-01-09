@@ -3,7 +3,7 @@ name: Build and send Docker Image to Dockerhub then update the host image
 on:
   push:
     branches:
-      - main  # Adjust the branch to your needs
+      - main  # Adjust the branch to your need
 
 jobs:
   build:
