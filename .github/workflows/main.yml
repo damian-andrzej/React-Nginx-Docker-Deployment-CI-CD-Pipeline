@@ -38,7 +38,7 @@ jobs:
     needs: build
 
     steps:
-      # Step 1: SSH into the virtual machine
+  # Step 1: SSH into the virtual machine
       - name: Deploy to virtual machine
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -48,14 +48,13 @@ jobs:
           port: 13060
           script: |
             # Pull the latest image from Docker Hub
-            #Elevate to root
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S su -
-            docker pull ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
+            # Elevate to root and pull the latest Docker image
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker pull ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
             
             # Stop and remove the old container
-            docker stop basic-react-app || true
-            docker rm basic-react-app || true
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker stop basic-react-app || true
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker rm basic-react-app || true
             
             # Start a new container with the updated image
-            docker run -d --name basic-react-app -p 80:80 ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker run -d --name basic-react-app -p 80:80 ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
 
