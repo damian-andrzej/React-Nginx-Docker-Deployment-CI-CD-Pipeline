@@ -49,7 +49,7 @@ jobs:
           script: |
             # Pull the latest image from Docker Hub
             #Elevate to root
-            sudo -S su -
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S su -
             docker pull ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
             
             # Stop and remove the old container
