@@ -49,8 +49,6 @@ jobs:
           script: |
             # Pull the latest image from Docker Hub
             #Elevate to root
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S su -
-            #option 2
             sudo -S su -
             docker pull ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
             
