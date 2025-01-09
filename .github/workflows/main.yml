@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and send Docker Image to Dockerhub then update the host image
 
 on:
   push:
@@ -33,6 +33,26 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
 
-      # Step 5: Log out of Docker Hub (Optional but recommended)
-      - name: Log out from Docker Hub
-        run: docker logout
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      # Step 1: SSH into the virtual machine
+      - name: Deploy to virtual machine
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          password: ${{ secrets.HOST_PASSWORD }}  # Możesz użyć klucza SSH zamiast hasła
+          script: |
+            # Pull the latest image from Docker Hub
+            docker pull ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
+            
+            # Stop and remove the old container
+            docker stop basic-react-app || true
+            docker rm basic-react-app || true
+            
+            # Start a new container with the updated image
+            docker run -d --name basic-react-app -p 80:80 ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
+
