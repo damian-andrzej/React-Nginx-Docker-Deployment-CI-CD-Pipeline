@@ -44,7 +44,8 @@ jobs:
         with:
           host: ${{ secrets.HOST_IP }}
           username: ${{ secrets.HOST_USER }}
-          password: ${{ secrets.HOST_PASSWORD }}  # Możesz użyć klucza SSH zamiast hasła
+          password: ${{ secrets.HOST_PASSWORD }}  
+          port: 13060
           script: |
             # Pull the latest image from Docker Hub
             docker pull ${{ secrets.DOCKER_USERNAME }}/basic-react-app:latest
