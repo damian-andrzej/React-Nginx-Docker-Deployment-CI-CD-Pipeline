@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./logs:/var/log/nginx # logs directory need to be created!!
+      - ./logs:/var/log/nginx # log's directory need to be created!!
     restart: always
 
 volumes:
