@@ -26,7 +26,7 @@ This repository demonstrates the deployment of a React application served using 
 ## 📂 Project Structure
 
 ```plaintext
-.
+
 ├── Dockerfile               # Dockerfile to build and serve React app with Nginx
 ├── docker-compose.yml       # Docker Compose for managing services
 ├── .github/workflows        # CI/CD pipeline configuration for GitHub Actions
